@@ -10,15 +10,13 @@
     var height = imageData.height;
 
     var kernelX = [
-      [-1,0,1],
-      [-2,0,2],
-      [-1,0,1]
+      [1,0],
+      [0,-1]
     ];
 
     var kernelY = [
-      [-1,-2,-1],
-      [0,0,0],
-      [1,2,1]
+      [0,1],
+      [-1,0]
     ];
 
     var sobelData = [];
@@ -51,30 +49,20 @@
     for (y = 0; y < height; y++) {
       for (x = 0; x < width; x++) {
         var pixelX = (
-            (kernelX[0][0] * pixelAt(x - 1, y - 1)) +
-            (kernelX[0][1] * pixelAt(x, y - 1)) +
-            (kernelX[0][2] * pixelAt(x + 1, y - 1)) +
-            (kernelX[1][0] * pixelAt(x - 1, y)) +
-            (kernelX[1][1] * pixelAt(x, y)) +
-            (kernelX[1][2] * pixelAt(x + 1, y)) +
-            (kernelX[2][0] * pixelAt(x - 1, y + 1)) +
-            (kernelX[2][1] * pixelAt(x, y + 1)) +
-            (kernelX[2][2] * pixelAt(x + 1, y + 1))
+            (kernelX[0][0] * pixelAt(x, y - 1)) +
+            (kernelX[0][1] * pixelAt(x - 1, y)) +
+            (kernelX[1][0] * pixelAt(x + 1, y)) +
+            (kernelX[1][1] * pixelAt(x, y + 1))
         );
 
         var pixelY = (
-          (kernelY[0][0] * pixelAt(x - 1, y - 1)) +
-          (kernelY[0][1] * pixelAt(x, y - 1)) +
-          (kernelY[0][2] * pixelAt(x + 1, y - 1)) +
-          (kernelY[1][0] * pixelAt(x - 1, y)) +
-          (kernelY[1][1] * pixelAt(x, y)) +
-          (kernelY[1][2] * pixelAt(x + 1, y)) +
-          (kernelY[2][0] * pixelAt(x - 1, y + 1)) +
-          (kernelY[2][1] * pixelAt(x, y + 1)) +
-          (kernelY[2][2] * pixelAt(x + 1, y + 1))
+          (kernelY[0][0] * pixelAt(x, y - 1)) +
+          (kernelY[0][1] * pixelAt(x - 1, y)) +
+          (kernelY[1][0] * pixelAt(x + 1, y)) +
+          (kernelY[1][1] * pixelAt(x, y + 1))
         );
 
-        var magnitude = Math.sqrt((pixelX * pixelX) + (pixelY * pixelY))>>>0;
+        var magnitude = 255 - Math.sqrt((pixelX * pixelX) + (pixelY * pixelY))>>>0;
 
         sobelData.push(magnitude, magnitude, magnitude, 255);
       }
